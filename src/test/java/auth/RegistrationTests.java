@@ -16,10 +16,16 @@ import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverConditions.url;
 
 public class RegistrationTests {
+
     @BeforeAll
     public static void config() {
-        Configuration.baseUrl = Constant.Urls.BASE_URL;
+        Configuration.baseUrl = Constant.urlsConfig.baseUrl();
     }
+
+    Faker faker = new Faker();
+    private final LoginPage loginPage = new LoginPage();
+    private final RegistrationPage registrationPage = new RegistrationPage();
+    private final CreatedAccountPage createdAccountPage = new CreatedAccountPage();
 
     @Test
     public void successRegistrationPageOpen() {
@@ -30,32 +36,24 @@ public class RegistrationTests {
 
     @Test
     public void loginRegistrationWithoutName() {
-        Faker faker = new Faker();
-        LoginPage loginPage = new LoginPage();
         loginPage.register("", faker.internet().emailAddress())
                 .isLoginPage();
     }
 
     @Test
     public void loginRegistrationWithoutMail() {
-        Faker faker = new Faker();
-        LoginPage loginPage = new LoginPage();
         loginPage.register(faker.name().name(), "")
                 .isLoginPage();
     }
 
     @Test
     public void loginRegistrationWithoutDomainName() {
-        Faker faker = new Faker();
-        LoginPage loginPage = new LoginPage();
         loginPage.register(faker.name().name(), faker.internet().emailAddress().split("@")[0])
                 .isLoginPage();
     }
 
     @Test
     public void loginRegistrationWithoutMailSign() {
-        Faker faker = new Faker();
-        LoginPage loginPage = new LoginPage();
         String name = faker.name().name();
         loginPage.register(name, name)
                 .isLoginPage();
@@ -63,10 +61,8 @@ public class RegistrationTests {
 
     @Test
     public void registrationWithExistMail() {
-        Faker faker = new Faker();
-        new LoginPage()
-            .register(faker.name().firstName(),Constant.EXIST_MAIL)
-            .isLoginPage();
+        loginPage.register(faker.name().firstName(), Constant.EXIST_MAIL)
+                .isLoginPage();
     }
 
     @Test
@@ -74,96 +70,98 @@ public class RegistrationTests {
         LoginInfoEnter.getFilledOutLoginPage();
         RegistrationInfoEnter.getFilledOutRegistrationPage()
                 .clickRegistrationButton();
-        webdriver().shouldHave(url(Constant.Urls.ACCOUNT_CREATED_URL));
+        webdriver().shouldHave(url(Constant.urlsConfig.accountCreatedUrl()));
     }
+
     @Test
-    public void registrationWithoutName(){
+    public void registrationWithoutName() {
         LoginInfoEnter.getFilledOutLoginPage();
         RegistrationInfoEnter.getFilledOutRegistrationPage()
-            .setName("")
-            .clickRegistrationButton()
-            .isRegisterPage();
+                .setName("")
+                .clickRegistrationButton()
+                .isRegisterPage();
     }
 
     @Test
-    public void registrationWithoutPassword(){
+    public void registrationWithoutPassword() {
         LoginInfoEnter.getFilledOutLoginPage();
-        new RegistrationPage()
-            .setPassword("")
-            .clickRegistrationButton()
-            .isRegisterPage();
+        registrationPage
+                .setPassword("")
+                .clickRegistrationButton()
+                .isRegisterPage();
     }
 
     @Test
-    public void registrationWithoutFirstName(){
+    public void registrationWithoutFirstName() {
         LoginInfoEnter.getFilledOutLoginPage();
         RegistrationInfoEnter.getFilledOutRegistrationPage()
-            .setFirstName("")
-            .clickRegistrationButton()
-            .isRegisterPage();
+                .setFirstName("")
+                .clickRegistrationButton()
+                .isRegisterPage();
     }
 
     @Test
-    public void registrationWithoutLastName(){
+    public void registrationWithoutLastName() {
         LoginInfoEnter.getFilledOutLoginPage();
-        new RegistrationPage()
-            .setLastName("")
-            .clickRegistrationButton()
-            .isRegisterPage();
+        registrationPage
+                .setLastName("")
+                .clickRegistrationButton()
+                .isRegisterPage();
     }
 
     @Test
-    public void registrationWithoutState(){
+    public void registrationWithoutState() {
         LoginInfoEnter.getFilledOutLoginPage();
-        new RegistrationPage()
-            .setState("")
-            .clickRegistrationButton()
-            .isRegisterPage();
+        registrationPage
+                .setState("")
+                .clickRegistrationButton()
+                .isRegisterPage();
     }
 
     @Test
-    public void registrationWithoutCity(){
+    public void registrationWithoutCity() {
         LoginInfoEnter.getFilledOutLoginPage();
-        new RegistrationPage()
-            .setCity("")
-            .clickRegistrationButton()
-            .isRegisterPage();
+        registrationPage
+                .setCity("")
+                .clickRegistrationButton()
+                .isRegisterPage();
     }
 
     @Test
-    public void registrationWithoutZipcode(){
+    public void registrationWithoutZipcode() {
         LoginInfoEnter.getFilledOutLoginPage();
-        new RegistrationPage()
-            .setZipcode("")
-            .clickRegistrationButton()
-            .isRegisterPage();
-    }
-    @Test
-    public void registrationWithoutMobileNumber(){
-        LoginInfoEnter.getFilledOutLoginPage();
-        new RegistrationPage()
-            .setMobileNumber("")
-            .clickRegistrationButton()
-            .isRegisterPage();
+        registrationPage
+                .setZipcode("")
+                .clickRegistrationButton()
+                .isRegisterPage();
     }
 
     @Test
-    public void registrationWithIncorrectMobileNumber(){
+    public void registrationWithoutMobileNumber() {
+        LoginInfoEnter.getFilledOutLoginPage();
+        registrationPage
+                .setMobileNumber("")
+                .clickRegistrationButton()
+                .isRegisterPage();
+    }
+
+    @Test
+    public void registrationWithIncorrectMobileNumber() {
         Faker faker = new Faker();
         LoginInfoEnter.getFilledOutLoginPage();
-        new RegistrationPage()
-            .setMobileNumber(faker.phoneNumber().phoneNumber() + faker.name())
-            .clickRegistrationButton()
-            .isRegisterPage();
+        registrationPage
+                .setMobileNumber(faker.phoneNumber().phoneNumber() + faker.name())
+                .clickRegistrationButton()
+                .isRegisterPage();
     }
 
     @Test
-    public void successLoginAfterRegistration(){
+    public void successLoginAfterRegistration() {
         LoginInfoEnter.getFilledOutLoginPage();
         RegistrationInfoEnter.getFilledOutRegistrationPage()
                 .clickRegistrationButton();
-        new CreatedAccountPage()
-            .clickContinueButton();
+        createdAccountPage
+                .clickContinueButton();
 
     }
 

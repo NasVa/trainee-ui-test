@@ -8,15 +8,14 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class LoginPage {
-    private final SelenideElement signupName = $("[data-qa = 'signup-name']");
-    private final SelenideElement signupMail = $("[data-qa = 'signup-email']");
-    private final SelenideElement signupButton = $("[data-qa = 'signup-button']");
-    private final SelenideElement loginForm = $(".signup-form");
-    private final String signupString = "New User Signup!";
-
+    private final static SelenideElement SIGNUP_NAME = $("[data-qa = 'signup-name']");
+    private final static SelenideElement SIGNUP_MAIL = $("[data-qa = 'signup-email']");
+    private final static SelenideElement SIGNUP_BUTTON = $("[data-qa = 'signup-button']");
+    private final static SelenideElement LOGIN_FORM = $(".signup-form");
+    private final static String SIGNUP_STRING = "New User Signup!";
 
     public LoginPage openPage(){
-        open(Constant.Urls.REGISTER_URL);
+        open(Constant.urlsConfig.registerUrl());
         return this;
     }
 
@@ -26,20 +25,23 @@ public class LoginPage {
             .setSignupMail(mail)
             .clickSignupButton();
     }
+
     public LoginPage setSignupName(String name){
-        signupName.setValue(name);
+        SIGNUP_NAME.setValue(name);
         return this;
     }
+
     public LoginPage setSignupMail(String mail){
-        signupMail.setValue(mail);
+        SIGNUP_MAIL.setValue(mail);
         return this;
     }
+
     public LoginPage clickSignupButton(){
-        signupButton.click();
+        SIGNUP_BUTTON.click();
         return this;
     }
 
     public void isLoginPage(){
-        this.loginForm.shouldHave(text(signupString));
+        LOGIN_FORM.shouldHave(text(SIGNUP_STRING));
     }
 }

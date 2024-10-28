@@ -1,13 +1,12 @@
 package org.nasva.constants;
 
+import org.aeonbits.owner.ConfigFactory;
+import org.nasva.config.UrlsConfig;
+
 import java.util.List;
 
 public class Constant {
-    public static class Urls{
-        public static final String BASE_URL = "https://automationexercise.com/";
-        public static final String REGISTER_URL = "https://automationexercise.com/signup";
-        public static final String ACCOUNT_CREATED_URL = "https://automationexercise.com/account_created";
-    }
+    public static final UrlsConfig urlsConfig = ConfigFactory.create(UrlsConfig.class, System.getProperties());
 
     public static final List<String> COUNTRIES = List.of(
             "India", "United States", "Canada", "Australia", "Israel", "New Zealand", "Singapore"
