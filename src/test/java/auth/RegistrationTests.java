@@ -1,9 +1,9 @@
 package auth;
 
-import com.codeborne.selenide.Configuration;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.nasva.config.Config;
 import org.nasva.constants.Constant;
 import org.nasva.pages.CreatedAccountPage;
 import org.nasva.pages.LoginPage;
@@ -19,10 +19,10 @@ public class RegistrationTests {
 
     @BeforeAll
     public static void config() {
-        Configuration.baseUrl = Constant.urlsConfig.baseUrl();
+        Config.config();
     }
 
-    Faker faker = new Faker();
+    private final Faker faker = new Faker();
     private final LoginPage loginPage = new LoginPage();
     private final RegistrationPage registrationPage = new RegistrationPage();
     private final CreatedAccountPage createdAccountPage = new CreatedAccountPage();
@@ -36,32 +36,42 @@ public class RegistrationTests {
 
     @Test
     public void loginRegistrationWithoutName() {
-        loginPage.register("", faker.internet().emailAddress())
+        loginPage
+                .openPage()
+                .register("", faker.internet().emailAddress())
                 .isLoginPage();
     }
 
     @Test
     public void loginRegistrationWithoutMail() {
-        loginPage.register(faker.name().name(), "")
+        loginPage
+                .openPage()
+                .register(faker.name().name(), "")
                 .isLoginPage();
     }
 
     @Test
     public void loginRegistrationWithoutDomainName() {
-        loginPage.register(faker.name().name(), faker.internet().emailAddress().split("@")[0])
+        loginPage
+                .openPage()
+                .register(faker.name().name(), faker.internet().emailAddress().split("@")[0])
                 .isLoginPage();
     }
 
     @Test
     public void loginRegistrationWithoutMailSign() {
         String name = faker.name().name();
-        loginPage.register(name, name)
+        loginPage
+                .openPage()
+                .register(name, name)
                 .isLoginPage();
     }
 
     @Test
     public void registrationWithExistMail() {
-        loginPage.register(faker.name().firstName(), Constant.EXIST_MAIL)
+        loginPage
+                .openPage()
+                .register(faker.name().firstName(), Constant.EXIST_MAIL)
                 .isLoginPage();
     }
 
