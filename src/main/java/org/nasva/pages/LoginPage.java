@@ -20,7 +20,7 @@ public class LoginPage {
     }
 
     public LoginPage register(String name, String mail){
-        return this.openPage()
+        return this
             .setSignupName(name)
             .setSignupMail(mail)
             .clickSignupButton();
