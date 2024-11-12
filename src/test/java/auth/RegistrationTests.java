@@ -37,7 +37,6 @@ public class RegistrationTests {
     @Test
     public void loginRegistrationWithoutName() {
         loginPage
-                .openPage()
                 .register("", faker.internet().emailAddress())
                 .isLoginPage();
     }
@@ -45,7 +44,6 @@ public class RegistrationTests {
     @Test
     public void loginRegistrationWithoutMail() {
         loginPage
-                .openPage()
                 .register(faker.name().name(), "")
                 .isLoginPage();
     }
@@ -53,7 +51,6 @@ public class RegistrationTests {
     @Test
     public void loginRegistrationWithoutDomainName() {
         loginPage
-                .openPage()
                 .register(faker.name().name(), faker.internet().emailAddress().split("@")[0])
                 .isLoginPage();
     }
@@ -62,7 +59,6 @@ public class RegistrationTests {
     public void loginRegistrationWithoutMailSign() {
         String name = faker.name().name();
         loginPage
-                .openPage()
                 .register(name, name)
                 .isLoginPage();
     }
@@ -70,7 +66,6 @@ public class RegistrationTests {
     @Test
     public void registrationWithExistMail() {
         loginPage
-                .openPage()
                 .register(faker.name().firstName(), Constant.EXIST_MAIL)
                 .isLoginPage();
     }
