@@ -1,4 +1,4 @@
-package auth;
+package org.nasva.auth;
 
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeAll;
