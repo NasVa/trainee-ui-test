@@ -16,8 +16,8 @@ pipeline {
                     ]
 
                     def configuration = [
-                        vaultUrl: 'http://vault:8200',
-                        vaultCredentialId: 'vault-vagrant',
+//                         vaultUrl: 'http://vault:8200',
+                        vaultCredentialId: 'vault-jenkins-role2',
                         engineVersion: 1
                     ]
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
