@@ -4,6 +4,28 @@ pipeline {
         maven '3.9.9'
     }
     stages {
+        stage('Setup Environment') {
+            steps {
+                script{
+                    def secrets = [
+                        [
+                            path: 'secrets/creds/test-creds',
+                            engineVersion: 1,
+                            secretValues: [[vaultKey: 'testPassword']]
+                        ]
+                    ]
+
+                    def configuration = [
+                        vaultUrl: 'http://vault:8200',
+                        vaultCredentialId: 'vault-vagrant',
+                        engineVersion: 1
+                    ]
+                    withVault([configuration: configuration, vaultSecrets: secrets]) {
+                        sh 'echo "Vault KV Values"'
+                        echo "All secrets: $testPassword"
+                    }
+                }
+            }
         stage('Test') {
             steps {
                 script {
