@@ -11,18 +11,17 @@ pipeline {
                         [
                             path: 'secrets/creds/test-creds',
                             engineVersion: 1,
-                            secretValues: [[vaultKey: 'testPassword']]
+                            secretValues: [[envKey: 'TEST_PASSWORD', vaultKey: "test_password"]]
                         ]
                     ]
 
                     def configuration = [
-//                         vaultUrl: 'http://vault:8200',
                         vaultCredentialId: 'vault-jenkins-role2',
                         engineVersion: 1
                     ]
                     withVault([configuration: configuration, vaultSecrets: secrets]) {
                         sh 'echo "Vault KV Values"'
-                        echo "All secrets: $testPassword"
+                        echo "All secrets: $TEST_PASSWORD"
                     }
                 }
             }

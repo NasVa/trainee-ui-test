@@ -15,6 +15,6 @@ public class Constant {
     public static final String EXIST_MAIL = "test@mail.ru";
     public static final String REFERENCES_FILENAME = "productsBase/references.json";
     public static final String kidsDressesKey = "kidsDresses";
-    public static final String TEST_PASSWORD = "test";
+    public static final String TEST_PASSWORD = System. getenv("TEST_PASSWORD");//testPassword secrets/creds/test-creds
     public static final String TEST_MAIL = "test@test";
 }
